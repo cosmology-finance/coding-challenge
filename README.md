@@ -7,7 +7,7 @@ You'll be working in `./packages/app`. The goal is to use mobx stores and displa
 
 We'll be using https://mobx.js.org/
 
-* `./packages/app/data/asset-list.ts` should be genesis state for a mobx store. 
+* [packages/app/data/asset-list.ts](packages/app/data/asset-list.ts) should be genesis state for a mobx store. 
 
 ### mobx `Asset` store methods
 
@@ -29,7 +29,7 @@ This should add a pool of two assets.
 
 ## User Interface
 
-A react next.js page exists at `packages/app/pages/index.tsx`
+A react next.js page exists at [packages/app/pages/index.tsx](packages/app/pages/index.tsx)
 
 ```
 cd ./packages/app/
