@@ -2,15 +2,14 @@
 
 ## instructions
 
-You'll be working in `./packages/app`. The goal is to convert what is currently a static file, `./packages/app/data/asset-list.ts`, into a mobx store.
-
+You'll be working in `./packages/app`. The goal is to use mobx stores and display the data in a user interface.
 ## Data
 
 We'll be using https://mobx.js.org/
 
-* `./packages/app/data/asset-list.ts` should be genesis state for a mobx store
+* `./packages/app/data/asset-list.ts` should be genesis state for a mobx store. 
 
-### mobx asset methods
+### mobx `Asset` store methods
 
 * `addAsset(asset: ChainCoin)`
 
@@ -22,7 +21,7 @@ this should update an asset, `denom_units`, `base`, `logo_URIs`, etc.
 
 * `removeAsset(asset: ChainCoin)`
 
-### mobx pool methods
+### mobx `Pool` store methods
 
 * `addPool(asset1: ChainCoin, asset2: ChainCoin)` 
 
