@@ -5,9 +5,7 @@
 You'll be working in `./packages/app`. The goal is to use mobx stores and display the data in a user interface.
 ## Data
 
-We'll be using https://mobx.js.org/
-
-* [packages/app/data/asset-list.ts](packages/app/data/asset-list.ts) should be genesis state for a mobx store. 
+We'll be using https://mobx.js.org/, and [packages/app/data/asset-list.ts](packages/app/data/asset-list.ts) should be genesis state for a mobx store. 
 
 ### mobx `Asset` store methods
 
