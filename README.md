@@ -31,6 +31,8 @@ This should add a pool of two assets.
 
 A react next.js page exists at [packages/app/pages/index.tsx](packages/app/pages/index.tsx)
 
+Components are already built using https://chakra-ui.com/ — it's optional if you want to add new UI.
+
 ```
 cd ./packages/app/
 yarn dev
@@ -40,6 +42,8 @@ A pool list UI is already ready, but is hard-coded to use `asset-list`. It shoul
 
 
 Update `ListPools` to take react `props` to connect to the mobx store. When you call `addPool`, it should add pools to the UI. 
+
+The pools component is here: [packages/app/components/pools-list.tsx](packages/app/components/pools-list.tsx)
 
 ## Note on data input
 
