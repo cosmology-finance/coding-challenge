@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from "react";
-
+import React from "react";
 import Pools from '../components/pools-list';
+import { useLocalObservable, Observer } from "mobx-react-lite";
+import { store } from "../store/root";
 
 export default function Index() {
+
+  const { poolStore, assetStore } = useLocalObservable(() => store);
+
   return (<>
-    <Pools />
+    <Observer>
+      {
+        () => <Pools pools={poolStore.pools} assets={assetStore.assets} />
+      }
+    </Observer>
   </>
   );
 }
