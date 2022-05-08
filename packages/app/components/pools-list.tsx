@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Box,
   Heading,
@@ -12,20 +12,11 @@ import {
   GridItem,
   Divider,
 } from "@chakra-ui/react";
-import { osmosis } from "../data/asset-list";
+import { observer } from "mobx-react-lite"
+import { RootStore } from "../store";
+import { PoolData } from "../store/pool-store";
 
-interface PoolsData {
-  id: string;
-  token1: { name: string; imgSrc: string };
-  token2: { name: string; imgSrc: string };
-  poolLiquidity: number;
-  apr: number;
-  myLiquidity: number;
-  myBoundedAmount: number;
-  longestDaysUnbonding: boolean;
-}
-
-const PoolsCard = ({ poolsData }: { poolsData: PoolsData[] }) => {
+const PoolsCard = observer(({ poolsData }: { poolsData: PoolData[] }) => {
   return (
     <SimpleGrid columns={{ sm: 2, lg: 4 }} gap={4} mb={8}>
       {poolsData.map(
@@ -202,68 +193,14 @@ const PoolsCard = ({ poolsData }: { poolsData: PoolsData[] }) => {
       )}
     </SimpleGrid>
   );
-};
+})
 
-export default function ListPools() {
-  const [poolsData, setPoolsData] = useState<PoolsData[]>([]);
+const ListPools = observer(({ store }: { store: RootStore }) => {
+  const { poolStore } = store
 
-  useEffect(() => {
-    const getShuffledArr = (arr: any[]) => {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const rand = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[rand]] = [arr[rand], arr[i]];
-      }
-      return arr;
-    };
-    const allTokens = osmosis.assets.map(({ name, logo_URIs }) => ({
-      name: name,
-      imgSrc: logo_URIs.png,
-    }));
-    const poolOptionToken1 = getShuffledArr([...allTokens]);
-    const poolOptionToken2 = getShuffledArr([...allTokens]).filter(
-      (v, i) => v !== poolOptionToken1[i]
-    );
-    const getRandomId = getShuffledArr(
-      [...Array(500)].map((v, i) => (v = i + 1))
-    ).slice(0, 4);
-    const getRandomPoolLiquidity = [...Array(4)].fill(undefined).map((_) => {
-      return parseInt(
-        getShuffledArr([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-          .toString()
-          .replaceAll(",", "")
-      );
-    });
-    const getRandomMyLiquidity = [...Array(4)].fill(undefined).map((_) => {
-      return parseInt(
-        getShuffledArr([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-          .toString()
-          .slice(0, 5)
-          .replaceAll(",", "")
-      );
-    });
-    const getRandomAPR = [...Array(4)].fill(undefined).map((_) => {
-      return (
-        parseInt(
-          getShuffledArr([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-            .toString()
-            .slice(0, 7)
-            .replaceAll(",", "")
-        ) / 100
-      );
-    });
-    const getDefaultData = [...Array(4)].fill(undefined).map((_, i) => ({
-      id: getRandomId[i],
-      token1: poolOptionToken1[i],
-      token2: poolOptionToken2[i],
-      poolLiquidity: getRandomPoolLiquidity[i],
-      apr: getRandomAPR[i],
-      myLiquidity: getRandomMyLiquidity[i],
-      myBoundedAmount: getRandomMyLiquidity[i],
-      longestDaysUnbonding: Math.random() < 0.5,
-    }));
-    // console.log("getRandomAPR", getDefaultData);
-    setPoolsData(getDefaultData);
-  }, []);
+  const onCreateNewPool = () => {
+    poolStore.addPool();
+  }
 
   return (
     <Box p={4}>
@@ -271,7 +208,7 @@ export default function ListPools() {
         <Heading as="h2" fontSize="2xl" mr={4}>
           Active Pools
         </Heading>
-        <Button display={{ base: "none", sm: "block" }}>Create New Pool</Button>
+        <Button display={{ base: "none", sm: "block" }} onClick={onCreateNewPool}>Create New Pool</Button>
       </Flex>
       <SimpleGrid columns={{ sm: 2 }} gap={4} maxW={{ sm: "md" }} mb={8}>
         <Box>
@@ -333,8 +270,10 @@ export default function ListPools() {
         <Text fontSize="2xl" fontWeight="bold" mb={4}>
           My Pools
         </Text>
-        <PoolsCard poolsData={poolsData} />
+        <PoolsCard poolsData={poolStore.poolsData} />
       </Box>
     </Box>
   );
-}
+})
+
+export default ListPools;
