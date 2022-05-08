@@ -15,7 +15,6 @@ export interface PoolData {
 export default class PoolStore {
     rootStore: RootStore;
     poolsData: PoolData[] = [];
-    poolTokenNames: string[] = [];
 
     constructor(rootStore: RootStore) {
         makeObservable(this, {
@@ -30,11 +29,7 @@ export default class PoolStore {
         return this.rootStore.assetStore.chain.assets.map(({ name, logo_URIs }) => ({
             name: name,
             imgSrc: logo_URIs.png,
-        })).filter(v => this.poolTokenNames.indexOf(v.name) === -1);
-    }
-
-    set current(pool: PoolData) {
-        this.poolTokenNames.push(pool.token1.name, pool.token2.name);
+        }));
     }
 
     getShuffledArr(arr: any[]) {
@@ -77,6 +72,5 @@ export default class PoolStore {
             longestDaysUnbonding: Math.random() < 0.5,
         }
         this.poolsData.push(pool);
-        this.current = pool;
     }
 }
