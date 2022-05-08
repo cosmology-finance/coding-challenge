@@ -47,7 +47,7 @@ export default class PoolStore {
 
     addPool() {
         const poolOptionTokens = this.getShuffledArr([...this.allTokens]);
-        const id = (this.poolsData.length + 1).toString()
+        const id = Math.floor(Math.random() * 500 + 1).toString()
         const randomPoolLiquidity = parseInt(
             this.getShuffledArr([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
                 .toString()
