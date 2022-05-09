@@ -10,11 +10,16 @@ export default class AssetStore {
     }
 
     addAsset(asset: ChainCoin) {
-        this.chain.assets.push(asset)
+        if (this.chain.assets.filter(
+            v => v.symbol === asset.symbol
+        ).length === 0
+        ) {
+            this.chain.assets.push(asset);
+        }
     }
 
     updateAsset(asset: ChainCoin) {
-        this.chain.assets.map(v => {
+        this.chain.assets = this.chain.assets.map(v => {
             if (v.symbol === asset.symbol) {
                 return asset;
             } else {
@@ -24,7 +29,7 @@ export default class AssetStore {
     }
 
     removeAsset(asset: ChainCoin) {
-        this.chain.assets.filter(
+        this.chain.assets = this.chain.assets.filter(
             v => v.symbol !== asset.symbol
         );
     }
