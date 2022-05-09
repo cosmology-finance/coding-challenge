@@ -11,4 +11,4 @@ export class RootStore {
     }
 }
 
-export default new RootStore();
+export default RootStore;
